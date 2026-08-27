@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+    <div class="container container-sm page-center">
+        <div class="card" style="width: 100%;">
+            <h1 class="text-center mb-4">Create an Account</h1>
+            
+            {% for message in messages %}
+                <div class="message message-error">{{ message }}</div>
+            {% endfor %}
+
+            <form action="{% url 'create_user' %}" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="text-muted" style="display:block; margin-top: 4px; font-size: 0.85em;">{{ field.help_text|safe }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="text-error" style="color: red; font-size: 0.85em; margin-top: 4px;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    <div class="text-error" style="color: red; margin-bottom: 10px;">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

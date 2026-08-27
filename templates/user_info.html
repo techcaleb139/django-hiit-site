@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submitted User Information</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+    <div class="container container-sm page-center">
+        <div class="card text-center" style="width: 100%;">
+            <h1 class="mb-4">Submitted User Information</h1>
+            
+            <ul class="styled-list mb-4">
+                <li><span class="text-muted">First Name:</span> <strong>{{ first_name }}</strong></li>
+                <li><span class="text-muted">Last Name:</span> <strong>{{ last_name }}</strong></li>
+                <li><span class="text-muted">Age:</span> <strong>{{ age }}</strong></li>
+            </ul>
+
+            <div class="flex-between" style="justify-content: center;">
+                <a href="{% url 'home' %}" class="btn btn-secondary btn-inline">Go Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

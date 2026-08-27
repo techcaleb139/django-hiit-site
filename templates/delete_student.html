@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Student</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+    <div class="container container-sm page-center">
+        <div class="card text-center" style="width: 100%;">
+            <h1 class="mb-4">Confirm Deletion</h1>
+            
+            <p class="text-muted mb-4">Are you sure you want to delete the student <strong>{{ student.first_name }} {{ student.last_name }}</strong>?</p>
+
+            <form action="{% url 'delete_student' student.pk %}" method="post">
+                {% csrf_token %}
+                <div class="flex-between" style="justify-content: center;">
+                    <a href="{% url 'students' %}" class="btn btn-secondary btn-inline">Cancel</a>
+                    <button type="submit" class="btn btn-danger btn-inline">Confirm Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

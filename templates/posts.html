@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaybobo Posts</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+    <style>
+        .page {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 24px;
+        }
+
+        .hero-card {
+            background-color: var(--accent-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+        }
+        
+        .hero-card h3 {
+            color: white;
+        }
+
+        .hero-card p {
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 800px) {
+            .hero { grid-template-columns: 1fr; }
+            .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="topbar">
+            <div class="brand">Kaybobo Posts {{posts.count}}</div>
+            <nav class="nav">
+                <a href="#page1" class="active-nav" data-page="page1">Home</a>
+                <a href="#page2" data-page="page2">Trending</a>
+                <a href="#page3" data-page="page3">About</a>
+                <a href="{% url 'home' %}">Back to app</a>
+            </nav>
+        </header>
+        {% for post in posts %}
+        <section id="page1" class="page active">
+            <div class="card hero">
+                <div>
+                    <span class="tag">Simple • Clean • Fast</span>
+                    <h1>{{ post.name }}</h1>
+                    <p class="text-muted">{{ post.body }}</p>
+                </div>
+                <div class="hero-card">
+                    <div>
+                        <h3>Today’s focus</h3>
+                        <p>Clear writing, thoughtful design, and a light layout that feels modern.</p>
+                    </div>
+                    <div>4 new stories</div>
+                </div>
+            </div>
+
+            <div class="flex-between mb-4 mt-4">
+                <h2 class="mb-0">Latest stories</h2>
+            </div>
+
+            <div class="card-grid">
+                <article class="post-card">
+                    <span class="tag" style="align-self: flex-start;">Design</span>
+                    <h4 style="margin-bottom: 8px;">Minimal layouts win attention</h4>
+                    <p class="text-muted mb-0">Simple structure helps readers move through content without distraction.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="page2" class="page">
+            <div class="flex-between mb-4 mt-4">
+                <h2 class="mb-0">Trending now</h2>
+            </div>
+            <div class="card-grid">
+                <article class="post-card">
+                    <span class="tag" style="align-self: flex-start;">Focus</span>
+                    <h4 style="margin-bottom: 8px;">Less clutter, more clarity</h4>
+                    <p class="text-muted mb-0">Lean interfaces help people focus on what matters most.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="page3" class="page">
+            <div class="card mt-4">
+                <h2>Why this design works</h2>
+                <p class="text-muted mb-0">This page keeps the look lean and simple while giving the experience the feel of multiple pages through smooth section navigation. The cards stay clean, the colors stay soft, and the layout remains easy to read on both desktop and mobile devices.</p>
+            </div>
+        </section>
+        {% endfor %}
+        {% if not posts %}
+            <div class="empty-state">No posts available.</div>
+        {% endif %}
+    </div>
+
+    <script>
+        const links = document.querySelectorAll('.nav a[data-page]');
+        const pages = document.querySelectorAll('.page');
+
+        links.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const target = link.getAttribute('data-page');
+
+                pages.forEach(page => {
+                    page.classList.toggle('active', page.id === target);
+                });
+
+                links.forEach(item => {
+                    item.classList.toggle('active-nav', item === link);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Django App</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+    <div class="container">
+        <header class="topbar">
+            <div class="brand">My Django App</div>
+                        <nav class="nav">
+                {% if user.is_authenticated %}
+                <span class="text-muted" style="padding: 8px 16px;">Hi, {{ user.username }}</span>
+                <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'posts' %}">Posts</a>
+                <a href="{% url 'students' %}">Students</a>
+            </nav>
+        </header>
+
+        <div class="card text-center">
+            {% for message in messages %}
+                <div class="message message-success">{{ message }}</div>
+            {% endfor %}
+
+            <h1>Welcome to My Django App</h1>
+            <p class="text-muted mb-4">Select an option from the navigation bar above or use the links below.</p>
+            
+            <div class="flex-between mb-4" style="justify-content: center;">
+                <a href="{% url 'about' %}" class="btn btn-primary btn-inline">About Page</a>
+                <a href="{% url 'posts' %}" class="btn btn-secondary btn-inline">Posts</a>
+                <a href="{% url 'students' %}" class="btn btn-secondary btn-inline">Students</a>
+            </div>
+
+            
+        </div>
+    </div>
+</body>
+</html>

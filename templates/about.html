@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Django App</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+    <div class="container container-sm page-center">
+        <div class="card text-center" style="width: 100%;">
+            <h1 style="font-size: 1.3rem;">This is the about page of my Django app.<br>
+            <span class="text-muted" style="font-size: 1rem;">{{taofeek}}</span><br>
+            <span class="text-muted" style="font-size: 1rem;">The programmer name is {{programmer_name}}</span><br>
+            <span class="text-muted" style="font-size: 1rem;">Programmer age is {{programmer_age}}</span><br>
+            <span class="text-muted" style="font-size: 1rem;">Best Players are {{best_players}}</span><br>
+            <span class="text-muted" style="font-size: 1rem;">The G.O.A.T is {{GOAT}}</span></h1>
+
+            <ul class="styled-list">
+            {% for player in best_players %}
+                <li>
+                    {{player}} {% if player == "Ororo" %} <span class="tag mb-0">GOAT</span> {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+
+            <div class="flex-between" style="justify-content: center;">
+                <a href="/" class="btn btn-secondary btn-inline">Back to Home</a>
+                <a href="{% url 'home' %}" class="btn btn-primary btn-inline">Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

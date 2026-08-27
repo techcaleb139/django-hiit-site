@@ -1,0 +1,271 @@
+{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --surface: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --accent: #4f46e5;
+            --accent-soft: #eef2ff;
+            --border: #e5e7eb;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fbff 0%, var(--bg) 100%);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 999px;
+            margin-left: 8px;
+            transition: 0.2s ease;
+        }
+
+        .nav a:hover,
+        .nav a.active-nav {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 24px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+        }
+
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: 2rem;
+        }
+
+        .hero p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+        }
+
+        .hero-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.1rem;
+        }
+
+        .hero-card p {
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .post-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #f3f4f6;
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .post-card h4 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+        }
+
+        .post-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 24px 0 14px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 1.15rem;
+        }
+
+        .stack {
+            display: grid;
+            gap: 14px;
+        }
+
+        .about-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+        }
+
+        .about-card p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 800px) {
+            .hero { grid-template-columns: 1fr; }
+            .card-grid { grid-template-columns: 1fr; }
+            .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="topbar">
+            <div class="brand">Kaybobo Posts {{posts.count}}</div>
+            <nav class="nav">
+                <a href="#page1" class="active-nav" data-page="page1">Home</a>
+                <a href="#page2" data-page="page2">Trending</a>
+                <a href="#page3" data-page="page3">About</a>
+            </nav>
+        </header>
+
+        <section id="page1" class="page active">
+            <div class="hero">
+                <div>
+                    <span class="hero-badge">Simple • Clean • Fast</span>
+                    <h1>{{ post.name }}</h1>
+                    <p>{{ post.body }}</p>
+                </div>
+                <div class="hero-card">
+                    <div>
+                        <h3>Today’s focus</h3>
+                        <p>Clear writing, thoughtful design, and a light layout that feels modern.</p>
+                    </div>
+                    <div>4 new stories</div>
+                </div>
+            </div>
+
+            <div class="section-head">
+                <h2>Latest stories</h2>
+            </div>
+
+            <div class="card-grid">
+                <article class="post-card">
+                    <div class="post-card-inner">
+                        <span class="tag">Design</span>
+                        <h4>Minimal layouts win attention</h4>
+                        <p>Simple structure helps readers move through content without distraction.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="page2" class="page">
+            <div class="section-head">
+                <h2>Trending now</h2>
+            </div>
+            <div class="stack">
+                <article class="post-card">
+                    <div class="post-card-inner">
+                        <span class="tag">Focus</span>
+                        <h4>Less clutter, more clarity</h4>
+                        <p>Lean interfaces help people focus on what matters most.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="page3" class="page">
+            <div class="about-card">
+                <h2>Why this design works</h2>
+                <p>This page keeps the look lean and simple while giving the experience the feel of multiple pages through smooth section navigation. The cards stay clean, the colors stay soft, and the layout remains easy to read on both desktop and mobile devices.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
